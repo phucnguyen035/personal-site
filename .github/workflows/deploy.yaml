@@ -1,6 +1,7 @@
 name: Deploy
 
 on: 
+  workflow_dispatch:
   push:
     branches: 
       - main
@@ -20,7 +21,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           aws-region: ap-southeast-1
-      - uses: pnpm/action-setup@v2
+      - name: Use PNPM
+        uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Use Node.js
