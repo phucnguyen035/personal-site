@@ -17,9 +17,29 @@
     "tailwindcss": "^3.0.24"
   },
   "devDependencies": {
-    "sst": "^2.28.1",
+    "astro-sst": "^2.28.1",
     "aws-cdk-lib": "2.95.1",
     "constructs": "10.2.69",
-    "astro-sst": "^2.28.1"
+    "prettier": "^3.0.3",
+    "prettier-plugin-astro": "^0.12.0",
+    "prettier-plugin-tailwindcss": "^0.5.6",
+    "sst": "^2.28.1"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "printWidth": 100,
+    "plugins": [
+      "prettier-plugin-astro",
+      "prettier-plugin-tailwindcss"
+    ],
+    "overrides": [
+      {
+        "files": "*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      }
+    ]
   }
 }
