@@ -5,7 +5,7 @@ import { CONTACTS } from '../constants';
 
 <Layout>
   <main class="grid min-h-[calc(100dvh-64px)] w-full place-items-center">
-    <div class="flex flex-col items-center gap-6 dark:text-primary">
+    <div class="flex flex-col items-center gap-6">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -25,7 +25,7 @@ import { CONTACTS } from '../constants';
       <ul class="flex gap-6">
         {
           CONTACTS.map(({ platform, url }) => (
-            <li>
+            <li class="text-primary transition-colors hover:text-primary/50 dark:text-primary dark:hover:text-primary/75">
               <a href={url} target="_blank" rel="noopener noreferrer">
                 {platform === 'linkedin' && (
                   <svg
