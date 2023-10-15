@@ -1,10 +1,11 @@
 name: Deploy
 
-on: 
+on:
   workflow_dispatch:
   push:
-    branches: 
+    branches:
       - main
+      - staging
 
 permissions:
   contents: read
@@ -33,5 +34,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Deploy site
+        env:
+          STAGE: ${{ github.ref_name == 'main' && 'prod' || 'staging' }}
         run: |
-          pnpm sst deploy --stage prod
+          pnpm sst deploy --stage ${{ env.STAGE }}
