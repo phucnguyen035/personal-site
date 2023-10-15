@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
   darkMode: 'class',
@@ -11,6 +12,9 @@ export default {
           light: 'hsl(var(--primary-light), <alpha-value>)',
           dark: 'hsl(var(--primary-dark), <alpha-value>)',
         },
+      },
+      fontFamily: {
+        sans: ['Inter Variable', ...defaultTheme.fontFamily.sans],
       },
     },
   },
