@@ -14,10 +14,11 @@ export default {
       const site = new StaticSite(stack, 'site', {
         buildOutput: 'dist',
         buildCommand: 'pnpm build',
-        customDomain:
-          stack.stage === 'prod'
-            ? { domainName: 'phucn.dev', domainAlias: 'www.phucn.dev' }
-            : `${stack.stage}.phucn.dev`,
+        customDomain: {
+          domainName: stack.stage === 'prod' ? 'phucn.dev' : `${stack.stage}.phucn.dev`,
+          domainAlias: stack.stage === 'prod' ? 'www.phucn.dev' : '',
+          hostedZone: 'phucn.dev',
+        },
         cdk: {
           distribution: {
             httpVersion: HttpVersion.HTTP2_AND_3,
