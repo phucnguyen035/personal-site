@@ -1,5 +1,6 @@
 ---
 import '@fontsource-variable/inter';
+import ThemeButton from '../components/ThemeButton.astro';
 ---
 
 <html lang="en">
@@ -12,9 +13,16 @@ import '@fontsource-variable/inter';
   </head>
 
   <body class="bg-primary-light text-primary-dark dark:bg-primary-dark dark:text-primary-light">
-    <main>
-      <slot />
-    </main>
+    <header class="flex h-16 items-center gap-x-6 px-6">
+      <div class="flex-1"></div>
+      <div class="flex-1">
+        <h1 class="text-center text-4xl">Phuc Nguyen</h1>
+      </div>
+      <div class="flex-1 text-right">
+        <ThemeButton />
+      </div>
+    </header>
+    <slot />
   </body>
 </html>
 
