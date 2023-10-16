@@ -20,6 +20,18 @@ export default {
           domainAlias: stack.stage === 'prod' ? 'www.phucn.dev' : '',
           hostedZone: 'phucn.dev',
         },
+        fileOptions: [
+          {
+            exclude: '*',
+            include: '*.html',
+            cacheControl: 'public,max-age=0,must-revalidate',
+          },
+          {
+            exclude: '*',
+            include: ['*.css', '*.js'],
+            cacheControl: 'public,max-age=0,immutable',
+          },
+        ],
         cdk: {
           distribution: {
             comment: 'Personal site CDK distribution',
@@ -32,7 +44,7 @@ export default {
                 securityHeadersBehavior: {
                   contentSecurityPolicy: {
                     override: true,
-                    contentSecurityPolicy: 'default-src https:;',
+                    contentSecurityPolicy: 'default-src https:; script-src unsafe-inline https:',
                   },
                   strictTransportSecurity: {
                     override: true,
