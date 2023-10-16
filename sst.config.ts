@@ -20,6 +20,9 @@ export default {
           domainAlias: stack.stage === 'prod' ? 'www.phucn.dev' : '',
           hostedZone: 'phucn.dev',
         },
+        fileOptions: [
+          { exclude: '*', include: '*.woff2', cacheControl: 'public,max-age=31536000,immutable' },
+        ],
         cdk: {
           distribution: {
             comment: 'Personal site CDK distribution',
