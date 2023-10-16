@@ -12,6 +12,12 @@ const links = [
 ];
 
 const { pathname } = Astro.url;
+
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
 ---
 
 <html lang="en">
@@ -21,7 +27,7 @@ const { pathname } = Astro.url;
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="Personal website of Phúc Nguyễn" />
     <meta name="generator" content={Astro.generator} />
-    <title>Phúc Nguyễn</title>
+    <title>{`${title} | Phúc Nguyễn`}</title>
     <ViewTransitions />
   </head>
 
