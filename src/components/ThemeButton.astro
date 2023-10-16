@@ -62,7 +62,6 @@ import Button from './Button.astro';
       themeToggle.addEventListener('click', () => {
         const element = document.documentElement;
         element.classList.toggle('dark');
-        console.log('hehe');
 
         const isDark = element.classList.contains('dark');
         const nextTheme = isDark ? 'dark' : 'light';
