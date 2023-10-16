@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/inter';
 import ThemeButton from '../components/ThemeButton.astro';
+import Button from '../components/Button.astro';
 
 const links = [
   { label: 'Home', url: '/' },
@@ -25,11 +26,11 @@ const { pathname } = Astro.url;
   <body
     class="relative min-h-screen bg-primary-50 transition-colors dark:bg-primary-950 dark:text-primary-50"
   >
-    <header class="sticky top-0 z-10 flex h-16 items-center gap-x-6 px-8">
+    <header class="sticky top-0 z-20 flex h-16 items-center gap-x-6 px-8">
       <div class="flex-1"></div>
       <div class="flex-1">
         <ul
-          class="z-10 flex justify-evenly rounded-2xl capitalize shadow-md shadow-primary-950/20 backdrop-blur dark:bg-primary-800/10 dark:shadow-primary-600/50"
+          class="hidden justify-evenly rounded-2xl capitalize shadow-md shadow-primary-950/20 backdrop-blur dark:bg-primary-800/10 dark:shadow-primary-600/50 lg:flex"
         >
           {
             links.map(({ label, url }) => (
@@ -46,15 +47,90 @@ const { pathname } = Astro.url;
           }
         </ul>
       </div>
-      <div class="flex flex-1 justify-end">
+      <div class="flex flex-1 justify-end gap-x-2">
+        <Button
+          id="menu-toggle"
+          class="group items-center justify-end lg:hidden"
+          aria-expanded="false"
+          aria-label="Open menu"
+          aria-controls="mobile-menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6 group-aria-expanded:hidden"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="hidden h-6 w-6 group-aria-expanded:block"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </Button>
         <ThemeButton />
       </div>
     </header>
     <slot />
-    <slot />
-    <slot />
-    <slot />
-    <slot />
-    <slot />
+    <nav
+      id="mobile-menu"
+      aria-hidden="true"
+      class="group fixed inset-0 backdrop-blur-sm aria-hidden:invisible lg:hidden"
+    >
+      <ul
+        class="mx-auto mt-16 max-w-xs rounded-2xl bg-primary-50 p-4 opacity-100 shadow shadow-primary-950/20 transition-opacity group-aria-hidden:invisible group-aria-hidden:opacity-0 dark:bg-primary-900 dark:shadow-primary-600/50"
+      >
+        {
+          links.map(({ label, url }) => (
+            <li>
+              <a
+                href={url}
+                class="block py-3 font-medium transition-colors hover:text-primary-600"
+                class:list={[{ 'text-primary-600': pathname === url }]}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
   </body>
 </html>
+
+<script>
+  const menuToggle = document.querySelector('#menu-toggle');
+  const mobileMenu = document.querySelector('#mobile-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menuToggle.setAttribute(
+        'aria-expanded',
+        menuToggle.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'
+      );
+      mobileMenu.setAttribute(
+        'aria-hidden',
+        mobileMenu.getAttribute('aria-hidden') === 'true' ? 'false' : 'true'
+      );
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.firstChild?.contains(e.target as HTMLElement)) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+</script>
