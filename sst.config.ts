@@ -1,6 +1,7 @@
+import * as cdk from 'aws-cdk-lib';
+import * as cf from 'aws-cdk-lib/aws-cloudfront';
 import type { SSTConfig } from 'sst';
 import { StaticSite } from 'sst/constructs';
-import { HttpVersion } from 'aws-cdk-lib/aws-cloudfront';
 
 export default {
   config(_input) {
@@ -19,12 +20,41 @@ export default {
           domainAlias: stack.stage === 'prod' ? 'www.phucn.dev' : '',
           hostedZone: 'phucn.dev',
         },
-        fileOptions: [
-          { exclude: '*', include: '*.html', cacheControl: 'public,max-age=0,must-revalidate' },
-        ],
         cdk: {
           distribution: {
-            httpVersion: HttpVersion.HTTP2_AND_3,
+            comment: 'Personal site CDK distribution',
+            minimumProtocolVersion: cf.SecurityPolicyProtocol.TLS_V1_2_2021,
+            httpVersion: cf.HttpVersion.HTTP2_AND_3,
+            defaultBehavior: {
+              viewerProtocolPolicy: cf.ViewerProtocolPolicy.HTTPS_ONLY,
+              responseHeadersPolicy: new cf.ResponseHeadersPolicy(stack, 'ResponseHeaderPolicy', {
+                comment: 'Security headers response header policy',
+                securityHeadersBehavior: {
+                  contentSecurityPolicy: {
+                    override: true,
+                    contentSecurityPolicy: 'default-src https:;',
+                  },
+                  strictTransportSecurity: {
+                    override: true,
+                    accessControlMaxAge: cdk.Duration.days(365),
+                    includeSubdomains: true,
+                    preload: true,
+                  },
+                  xssProtection: {
+                    modeBlock: true,
+                    override: true,
+                    protection: true,
+                  },
+                  frameOptions: {
+                    override: true,
+                    frameOption: cf.HeadersFrameOption.DENY,
+                  },
+                },
+              }),
+            },
+          },
+          bucket: {
+            removalPolicy: cdk.RemovalPolicy.DESTROY,
           },
         },
       });
