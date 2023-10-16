@@ -35,7 +35,7 @@ export default {
                 securityHeadersBehavior: {
                   contentSecurityPolicy: {
                     override: true,
-                    contentSecurityPolicy: "default-src https:; script-src 'unsafe-inline' https:;",
+                    contentSecurityPolicy: "default-src 'unsafe-inline' https:;",
                   },
                   strictTransportSecurity: {
                     override: true,
