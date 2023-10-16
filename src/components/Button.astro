@@ -1,0 +1,12 @@
+---
+import { type HTMLAttributes } from 'astro/types';
+import { cx } from '../utils/cx';
+
+type Props = Omit<HTMLAttributes<'button'>, 'class:list'>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<button class={cx('flex rounded-2xl bg-primary-100 p-2 dark:bg-primary-800', className)} {...rest}>
+  <slot />
+</button>
