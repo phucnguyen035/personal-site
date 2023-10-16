@@ -19,6 +19,9 @@ export default {
           domainAlias: stack.stage === 'prod' ? 'www.phucn.dev' : '',
           hostedZone: 'phucn.dev',
         },
+        fileOptions: [
+          { exclude: '*', include: '*.html', cacheControl: 'public,max-age=0,must-revalidate' },
+        ],
         cdk: {
           distribution: {
             httpVersion: HttpVersion.HTTP2_AND_3,
