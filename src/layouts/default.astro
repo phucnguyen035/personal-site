@@ -1,6 +1,12 @@
 ---
 import '@fontsource-variable/inter';
 import ThemeButton from '../components/ThemeButton.astro';
+
+const links = [
+  { label: 'About', url: '/about' },
+  { label: 'Projects', url: '/projects' },
+  { label: 'Blog', url: '/blog' },
+];
 ---
 
 <html lang="en">
@@ -14,25 +20,34 @@ import ThemeButton from '../components/ThemeButton.astro';
   </head>
 
   <body
-    class="bg-primary-light text-primary-dark transition-colors dark:bg-primary-dark dark:text-primary-light"
+    class="relative min-h-screen bg-primary-50 transition-colors dark:bg-primary-950 dark:text-primary-50"
   >
-    <header class="flex h-16 items-center gap-x-6 px-6">
+    <header class="sticky top-0 z-10 flex h-16 items-center gap-x-6 px-8">
       <div class="flex-1"></div>
       <div class="flex-1">
-        <h1 class="text-center text-4xl">Phuc Nguyen</h1>
+        <ul
+          class="z-10 flex justify-evenly rounded-2xl capitalize shadow-md shadow-primary-950/20 backdrop-blur dark:bg-primary-800/10 dark:shadow-primary-600/50"
+        >
+          {
+            links.map(({ label, url }) => (
+              <li>
+                <a href={url} class="block py-2 text-sm">
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
       <div class="flex-1 text-right">
         <ThemeButton />
       </div>
     </header>
     <slot />
+    <slot />
+    <slot />
+    <slot />
+    <slot />
+    <slot />
   </body>
 </html>
-
-<style>
-  :root {
-    --primary: 204, 100%, 38%;
-    --primary-dark: 204, 25%, 5%;
-    --primary-light: 204, 10%, 82%;
-  }
-</style>

@@ -8,9 +8,17 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: 'hsl(var(--primary), <alpha-value>)',
-          light: 'hsl(var(--primary-light), <alpha-value>)',
-          dark: 'hsl(var(--primary-dark), <alpha-value>)',
+          '50': '#f0fbff',
+          '100': '#e1f5fe',
+          '200': '#b9ebfe',
+          '300': '#7cd9fd',
+          '400': '#38c0fa',
+          '500': '#0c9fe9',
+          '600': '#0074c2',
+          '700': '#0f395c',
+          '800': '#0f2a43',
+          '900': '#0f2033',
+          '950': '#060b14',
         },
       },
       fontFamily: {
