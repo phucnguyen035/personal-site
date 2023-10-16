@@ -2,6 +2,7 @@
 import '@fontsource-variable/inter';
 import ThemeButton from '../components/ThemeButton.astro';
 import Button from '../components/Button.astro';
+import { ViewTransitions } from 'astro:transitions';
 
 const links = [
   { label: 'Home', url: '/' },
@@ -21,6 +22,7 @@ const { pathname } = Astro.url;
     <meta name="description" content="Personal website of Phúc Nguyễn" />
     <meta name="generator" content={Astro.generator} />
     <title>Phúc Nguyễn</title>
+    <ViewTransitions />
   </head>
 
   <body
@@ -106,31 +108,31 @@ const { pathname } = Astro.url;
         }
       </ul>
     </nav>
+
+    <script>
+      const menuToggle = document.querySelector('#menu-toggle');
+      const mobileMenu = document.querySelector('#mobile-menu');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menuToggle.setAttribute(
+            'aria-expanded',
+            menuToggle.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'
+          );
+          mobileMenu.setAttribute(
+            'aria-hidden',
+            mobileMenu.getAttribute('aria-hidden') === 'true' ? 'false' : 'true'
+          );
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!mobileMenu.firstChild?.contains(e.target as HTMLElement)) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }
+    </script>
   </body>
 </html>
-
-<script>
-  const menuToggle = document.querySelector('#menu-toggle');
-  const mobileMenu = document.querySelector('#mobile-menu');
-
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      menuToggle.setAttribute(
-        'aria-expanded',
-        menuToggle.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'
-      );
-      mobileMenu.setAttribute(
-        'aria-hidden',
-        mobileMenu.getAttribute('aria-hidden') === 'true' ? 'false' : 'true'
-      );
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!mobileMenu.firstChild?.contains(e.target as HTMLElement)) {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-      }
-    });
-  }
-</script>

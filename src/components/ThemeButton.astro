@@ -38,7 +38,7 @@ import Button from './Button.astro';
     el.ariaLabel = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
   }
 
-  const theme = (() => {
+  function getTheme() {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
       return localStorage.getItem('theme') ?? 'light';
     }
@@ -46,28 +46,33 @@ import Button from './Button.astro';
       return 'dark';
     }
     return 'light';
-  })();
-
-  if (theme === 'light') {
-    document.documentElement.classList.remove('dark');
-  } else {
-    document.documentElement.classList.add('dark');
   }
 
-  window.localStorage.setItem('theme', theme);
+  function setDarkMode() {
+    const theme = getTheme();
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+    window.localStorage.setItem('theme', theme);
 
-  const themeToggle = document.querySelector('#theme-toggle');
-  if (themeToggle) {
-    setThemeToggleAria(themeToggle, theme);
+    const themeToggle = document.querySelector('#theme-toggle');
+    if (themeToggle) {
+      setThemeToggleAria(themeToggle, getTheme());
 
-    themeToggle.addEventListener('click', () => {
-      const element = document.documentElement;
-      element.classList.toggle('dark');
+      themeToggle.addEventListener('click', () => {
+        const element = document.documentElement;
+        element.classList.toggle('dark');
+        console.log('hehe');
 
-      const isDark = element.classList.contains('dark');
-      const nextTheme = isDark ? 'dark' : 'light';
-      localStorage.setItem('theme', nextTheme);
-      setThemeToggleAria(themeToggle, nextTheme);
-    });
+        const isDark = element.classList.contains('dark');
+        const nextTheme = isDark ? 'dark' : 'light';
+        localStorage.setItem('theme', nextTheme);
+        setThemeToggleAria(themeToggle, nextTheme);
+      });
+    }
   }
+
+  setDarkMode();
+
+  document.addEventListener('astro:after-swap', setDarkMode);
 </script>
