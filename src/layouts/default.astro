@@ -3,10 +3,13 @@ import '@fontsource-variable/inter';
 import ThemeButton from '../components/ThemeButton.astro';
 
 const links = [
+  { label: 'Home', url: '/' },
   { label: 'About', url: '/about' },
   { label: 'Projects', url: '/projects' },
   { label: 'Blog', url: '/blog' },
 ];
+
+const { pathname } = Astro.url;
 ---
 
 <html lang="en">
@@ -31,7 +34,11 @@ const links = [
           {
             links.map(({ label, url }) => (
               <li>
-                <a href={url} class="block py-2 text-sm">
+                <a
+                  href={url}
+                  class="block py-2 text-sm font-medium transition-colors hover:text-primary-600"
+                  class:list={[{ 'text-primary-600': pathname === url }]}
+                >
                   {label}
                 </a>
               </li>
@@ -39,7 +46,7 @@ const links = [
           }
         </ul>
       </div>
-      <div class="flex-1 text-right">
+      <div class="flex flex-1 justify-end">
         <ThemeButton />
       </div>
     </header>
