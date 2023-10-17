@@ -124,7 +124,7 @@ const { title } = Astro.props;
         const mobileMenuToggle = document.querySelector<HTMLButtonElement>('#menu-toggle');
 
         document.documentElement.addEventListener('click', (e) => {
-          if (!mobileMenu || mobileMenu.getAttribute('aria-hidden') === 'false') {
+          if (!mobileMenu || mobileMenu.getAttribute('aria-hidden') === 'true') {
             return;
           }
 
