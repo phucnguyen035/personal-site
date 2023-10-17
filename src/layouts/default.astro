@@ -35,9 +35,9 @@ const { title } = Astro.props;
   </head>
 
   <body
-    class="before:border-primary-200:50 relative grid min-h-screen grid-rows-[6rem_auto] bg-primary-50 before:container before:absolute before:inset-0 before:z-[-1] before:mx-auto before:max-w-screen-lg before:border-x before:bg-primary-100/50 supports-dvh:min-h-[100dvh] dark:bg-primary-950 dark:text-primary-50 dark:before:border-primary-200/10 dark:before:bg-primary-900/10"
+    class="before:border-primary-200:50 relative grid min-h-screen grid-rows-[4rem_auto] bg-primary-50 before:container before:absolute before:inset-0 before:z-[-1] before:mx-auto before:max-w-screen-lg before:border-x before:bg-primary-100/50 supports-dvh:min-h-[100dvh] dark:bg-primary-950 dark:text-primary-50 dark:before:border-primary-200/10 dark:before:bg-primary-900/10"
   >
-    <header class="sticky top-0 z-20 flex items-center px-8">
+    <header class="sticky top-0 z-20 flex items-center px-8 transition-transform duration-500">
       <div class="flex-1">
         <a href="/">
           <Picture
@@ -45,9 +45,9 @@ const { title } = Astro.props;
             alt="Image of Phúc Nguyễn"
             densities={[1, 2]}
             formats={['avif', 'webp']}
-            width={64}
-            height={64}
-            class="flex w-12 rounded-full lg:w-16"
+            width={48}
+            height={48}
+            class="flex rounded-full"
           />
         </a>
       </div>
@@ -133,6 +133,18 @@ const { title } = Astro.props;
       </ul>
     </nav>
     <script>
+      function throttle<T extends Function>(func: T, delay: number = 300): T {
+        let lastCall = 0;
+        return function (...args: unknown[]) {
+          const now = new Date().getTime();
+          if (now - lastCall < delay) {
+            return;
+          }
+          lastCall = now;
+          return func(...args);
+        } as unknown as T;
+      }
+
       document.addEventListener('astro:page-load', () => {
         const mobileMenu = document.querySelector<HTMLDivElement>('#mobile-menu');
         const mobileMenuToggle = document.querySelector<HTMLButtonElement>('#menu-toggle');
@@ -162,6 +174,27 @@ const { title } = Astro.props;
             mobileMenu.getAttribute('aria-hidden') === 'true' ? 'false' : 'true'
           );
         });
+
+        const THRESHOLD = 300;
+        let lastScrollTop = 0;
+        window.addEventListener(
+          'scroll',
+          throttle(() => {
+            const header = document.querySelector('header');
+            if (!header) {
+              return;
+            }
+
+            let scrollTop = window.scrollY;
+            if (scrollTop > lastScrollTop && scrollTop > THRESHOLD) {
+              header.classList.add('-translate-y-20');
+            } else {
+              header.classList.remove('-translate-y-20');
+            }
+
+            lastScrollTop = scrollTop;
+          })
+        );
       });
     </script>
   </body>
