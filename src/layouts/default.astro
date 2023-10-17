@@ -1,8 +1,10 @@
 ---
 import '@fontsource-variable/inter';
+import { ViewTransitions } from 'astro:transitions';
+import { Picture } from 'astro:assets';
+import me from '../assets/me_portrait.png';
 import ThemeButton from '../components/ThemeButton.astro';
 import Button from '../components/Button.astro';
-import { ViewTransitions } from 'astro:transitions';
 import { cx } from '../utils/cx';
 
 const links = [
@@ -33,10 +35,21 @@ const { title } = Astro.props;
   </head>
 
   <body
-    class="relative grid min-h-screen grid-rows-[4rem_auto] bg-primary-50 supports-dvh:min-h-[100dvh] dark:bg-primary-950 dark:text-primary-50"
+    class="before:border-primary-200:50 relative grid min-h-screen grid-rows-[6rem_auto] bg-primary-50 before:container before:absolute before:inset-0 before:z-[-1] before:mx-auto before:max-w-screen-lg before:border-x before:bg-primary-100/50 supports-dvh:min-h-[100dvh] dark:bg-primary-950 dark:text-primary-50 dark:before:border-primary-200/10 dark:before:bg-primary-900/10"
   >
     <header class="sticky top-0 z-20 flex items-center px-8">
-      <div class="flex-1"></div>
+      <div class="flex-1">
+        <a href="/">
+          <Picture
+            src={me}
+            formats={['avif', 'webp']}
+            alt="Image of Phúc Nguyễnn"
+            width={64}
+            height={64}
+            class="flex min-w-[4rem] rounded-full"
+          />
+        </a>
+      </div>
       <div class="flex-1">
         <ul
           class="hidden justify-evenly rounded-2xl capitalize shadow-md shadow-primary-950/20 backdrop-blur dark:bg-primary-800/10 dark:shadow-primary-600/50 lg:flex"
