@@ -34,36 +34,99 @@ const { title } = Astro.props;
     <ViewTransitions />
   </head>
 
-  <body
-    class="before:border-primary-200:50 relative grid min-h-screen grid-rows-[4rem_auto] bg-primary-50 before:container before:absolute before:inset-0 before:z-[-1] before:mx-auto before:max-w-screen-lg before:border-x before:bg-primary-100/50 supports-dvh:min-h-[100dvh] dark:bg-primary-950 dark:text-primary-50 dark:before:border-primary-200/10 dark:before:bg-primary-900/10"
-  >
-    <header class="sticky top-0 z-20 flex items-center px-8 transition-transform duration-500">
-      <div class="flex-1">
-        <a href="/" transition:persist>
-          <Picture
-            src={me}
-            alt="Image of Phúc Nguyễn"
-            densities={[1, 2]}
-            formats={['avif', 'webp']}
-            width={48}
-            height={48}
-            class="flex rounded-full"
-          />
-        </a>
-      </div>
-      <div class="flex-1">
+  <body class="bg-primary-700/10 dark:bg-primary-950 dark:text-primary-50">
+    <div
+      class="relative mx-auto grid min-h-screen grid-rows-[4rem_auto] border-x border-primary-800/10 bg-primary-50 md:container supports-dvh:min-h-[100dvh] dark:bg-primary-900/20"
+    >
+      <header
+        class="sticky top-4 z-20 flex items-center px-8 transition-transform duration-500 lg:top-0"
+      >
+        <div class="flex-1">
+          <a href="/" transition:persist>
+            <Picture
+              src={me}
+              alt="Image of Phúc Nguyễn"
+              densities={[1, 2]}
+              formats={['avif', 'webp']}
+              width={48}
+              height={48}
+              class="flex rounded-full"
+            />
+          </a>
+        </div>
+        <div class="flex-1">
+          <ul
+            class="hidden justify-evenly rounded-2xl capitalize shadow-md shadow-primary-950/20 backdrop-blur dark:bg-primary-800/10 dark:shadow-primary-600/50 lg:flex"
+          >
+            {
+              links.map(({ label, url }) => (
+                <li>
+                  <a
+                    href={url}
+                    class={cx(
+                      'block py-2 text-sm font-medium hover:text-primary-500',
+                      pathname === url && 'text-primary-600 hover:text-primary-600'
+                    )}
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="flex flex-1 justify-end gap-x-2">
+          <ThemeButton />
+          <Button
+            id="menu-toggle"
+            type="button"
+            class="group items-center justify-end lg:hidden"
+            aria-expanded="false"
+            aria-label="Open menu"
+            aria-controls="mobile-menu"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-7 w-7 group-aria-expanded:hidden lg:h-6 lg:w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="hidden h-7 w-7 group-aria-expanded:block lg:h-6 lg:w-6"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </Button>
+        </div>
+      </header>
+      <slot />
+      <nav
+        id="mobile-menu"
+        aria-hidden="true"
+        class="group fixed inset-0 backdrop-blur-sm aria-hidden:invisible lg:hidden"
+      >
         <ul
-          class="hidden justify-evenly rounded-2xl capitalize shadow-md shadow-primary-950/20 backdrop-blur dark:bg-primary-800/10 dark:shadow-primary-600/50 lg:flex"
+          class="mx-8 mt-20 max-w-sm rounded-2xl bg-primary-50 p-4 opacity-100 shadow shadow-primary-950/20 transition-opacity group-aria-hidden:invisible group-aria-hidden:opacity-0 dark:bg-primary-900 dark:shadow-primary-600/50 sm:ml-auto"
         >
           {
             links.map(({ label, url }) => (
               <li>
                 <a
                   href={url}
-                  class={cx(
-                    'block py-2 text-sm font-medium hover:text-primary-500',
-                    pathname === url && 'text-primary-600 hover:text-primary-600'
-                  )}
+                  class="block py-3 font-medium transition-colors hover:text-primary-600"
+                  class:list={[{ 'text-primary-600': pathname === url }]}
                 >
                   {label}
                 </a>
@@ -71,67 +134,8 @@ const { title } = Astro.props;
             ))
           }
         </ul>
-      </div>
-      <div class="flex flex-1 justify-end gap-x-2">
-        <Button
-          id="menu-toggle"
-          type="button"
-          class="group items-center justify-end lg:hidden"
-          aria-expanded="false"
-          aria-label="Open menu"
-          aria-controls="mobile-menu"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-7 w-7 group-aria-expanded:hidden lg:h-6 lg:w-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-          </svg>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="hidden h-7 w-7 group-aria-expanded:block lg:h-6 lg:w-6"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </Button>
-        <ThemeButton />
-      </div>
-    </header>
-    <slot />
-    <nav
-      id="mobile-menu"
-      aria-hidden="true"
-      class="group fixed inset-0 backdrop-blur-sm aria-hidden:invisible lg:hidden"
-    >
-      <ul
-        class="mx-8 mt-16 max-w-xs rounded-2xl bg-primary-50 p-4 opacity-100 shadow shadow-primary-950/20 transition-opacity group-aria-hidden:invisible group-aria-hidden:opacity-0 dark:bg-primary-900 dark:shadow-primary-600/50 sm:ml-auto"
-      >
-        {
-          links.map(({ label, url }) => (
-            <li>
-              <a
-                href={url}
-                class="block py-3 font-medium transition-colors hover:text-primary-600"
-                class:list={[{ 'text-primary-600': pathname === url }]}
-              >
-                {label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+      </nav>
+    </div>
     <script>
       function throttle<T extends Function>(func: T, delay: number = 300): T {
         let lastCall = 0;
