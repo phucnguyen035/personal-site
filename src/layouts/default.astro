@@ -42,11 +42,12 @@ const { title } = Astro.props;
         <a href="/">
           <Picture
             src={me}
+            alt="Image of Phúc Nguyễn"
+            densities={[1, 2]}
             formats={['avif', 'webp']}
-            alt="Image of Phúc Nguyễnn"
             width={64}
             height={64}
-            class="flex min-w-[4rem] rounded-full"
+            class="flex w-12 rounded-full lg:w-16"
           />
         </a>
       </div>
