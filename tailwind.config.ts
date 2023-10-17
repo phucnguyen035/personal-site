@@ -24,6 +24,9 @@ export default {
       fontFamily: {
         sans: ['Inter Variable', ...defaultTheme.fontFamily.sans],
       },
+      supports: {
+        dvh: 'height: 1dvh',
+      },
     },
   },
   plugins: [],
