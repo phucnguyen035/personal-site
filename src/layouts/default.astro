@@ -36,10 +36,10 @@ const { title } = Astro.props;
 
   <body class="bg-primary-700/10 dark:bg-primary-950 dark:text-primary-50">
     <div
-      class="relative mx-auto grid min-h-screen grid-rows-[4rem_auto] border-x border-primary-800/10 bg-primary-50 md:container supports-dvh:min-h-[100dvh] dark:bg-primary-900/20"
+      class="container relative mx-auto grid min-h-screen grid-rows-[4rem_auto] border-x border-primary-800/10 bg-primary-50 supports-dvh:min-h-[100dvh] dark:bg-primary-900/20"
     >
       <header
-        class="sticky top-4 z-20 flex items-center px-8 transition-transform duration-500 lg:top-0"
+        class="sticky top-4 z-20 flex items-center px-8 transition-transform duration-500 lg:top-0 lg:pt-4"
       >
         <div class="flex-1">
           <a href="/" transition:persist>
@@ -48,9 +48,9 @@ const { title } = Astro.props;
               alt="Image of Phúc Nguyễn"
               densities={[1, 2]}
               formats={['avif', 'webp']}
-              width={48}
-              height={48}
-              class="flex rounded-full"
+              width={64}
+              height={64}
+              class="flex h-12 w-12 rounded-full transition-transform hover:scale-110"
             />
           </a>
         </div>
@@ -111,6 +111,13 @@ const { title } = Astro.props;
           </Button>
         </div>
       </header>
+      <slot />
+      <slot />
+      <slot />
+      <slot />
+      <slot />
+      <slot />
+      <slot />
       <slot />
       <nav
         id="mobile-menu"
