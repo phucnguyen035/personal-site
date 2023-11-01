@@ -63,7 +63,7 @@ const { title } = Astro.props;
         </div>
         <div class="flex-1">
           <ul
-            class="hidden justify-evenly rounded-2xl capitalize shadow-md shadow-primary-950/20 backdrop-blur dark:bg-primary-800/10 dark:shadow-primary-600/50 lg:flex"
+            class="hidden justify-evenly rounded-2xl capitalize shadow shadow-primary-950/20 backdrop-blur transition-shadow hover:shadow-lg dark:bg-primary-800/10 dark:shadow-primary-600/50 lg:flex"
           >
             {
               links.map(({ label, url }) => (
@@ -144,7 +144,7 @@ const { title } = Astro.props;
       </nav>
     </div>
     <script>
-      function throttle<T extends Function>(func: T, delay: number = 300): T {
+      function throttle<T extends Function>(func: T, delay = 250): T {
         let lastCall = 0;
         return function (...args: unknown[]) {
           const now = new Date().getTime();
@@ -168,12 +168,13 @@ const { title } = Astro.props;
           if (!mobileMenu.firstChild?.contains(e.target as HTMLElement)) {
             mobileMenuToggle?.setAttribute('aria-expanded', 'false');
             mobileMenu.setAttribute('aria-hidden', 'true');
+            document.documentElement.classList.remove('overflow-hidden');
           }
         });
 
         mobileMenuToggle?.addEventListener('click', (e) => {
-          e.preventDefault();
           e.stopImmediatePropagation();
+          document.documentElement.classList.toggle('overflow-hidden');
 
           mobileMenuToggle.setAttribute(
             'aria-expanded',
